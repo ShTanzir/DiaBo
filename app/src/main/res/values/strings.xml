@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DiaBo</string>
+    <string name="home_title">DiaBo</string>
+    <string name="new_project">New Project</string>
+    <string name="recent_projects">Recent Projects</string>
+    <string name="see_all">See all</string>
+    <string name="projects_title">Projects</string>
+    <string name="settings_title">Settings</string>
+    <string name="files_title">Files</string>
+    <string name="instant_preview">Instant Preview</string>
+    <string name="real_build">Real Build</string>
+    <string name="github_integration">GitHub Integration</string>
+    <string name="storage_title">Storage</string>
+    <string name="backup_restore">Backup &amp; Restore</string>
+    <string name="export_backup">Export Backup</string>
+    <string name="restore_backup">Restore Backup</string>
+    <string name="language">Language</string>
+</resources>

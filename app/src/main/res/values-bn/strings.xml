@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ডায়াবো</string>
+    <string name="home_title">ডায়াবো</string>
+    <string name="new_project">নতুন প্রজেক্ট</string>
+    <string name="recent_projects">সাম্প্রতিক প্রজেক্ট</string>
+    <string name="see_all">সব দেখুন</string>
+    <string name="projects_title">প্রজেক্টসমূহ</string>
+    <string name="settings_title">সেটিংস</string>
+    <string name="files_title">ফাইলসমূহ</string>
+    <string name="instant_preview">ইনস্ট্যান্ট প্রিভিউ</string>
+    <string name="real_build">রিয়েল বিল্ড</string>
+    <string name="github_integration">গিটহাব ইন্টিগ্রেশন</string>
+    <string name="storage_title">স্টোরেজ</string>
+    <string name="backup_restore">ব্যাকআপ ও রিস্টোর</string>
+    <string name="export_backup">ব্যাকআপ এক্সপোর্ট করুন</string>
+    <string name="restore_backup">ব্যাকআপ রিস্টোর করুন</string>
+    <string name="language">ভাষা</string>
+</resources>

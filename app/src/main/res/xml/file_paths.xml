@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- FileManager.rootDir = File(context.filesDir, "DiaBo") — true internal storage,
+         which FileProvider exposes via <files-path>, NOT <external-files-path>
+         (that tag is for getExternalFilesDir() only). This is what makes
+         FileProvider.getUriForFile() resolve BuildCache/*.apk correctly for
+         RealBuildSheet's Install Now / Share APK actions. -->
+    <files-path name="diabo_root" path="DiaBo/" />
+    <cache-path name="diabo_cache" path="." />
+</paths>
