@@ -44,8 +44,7 @@ class ProjectRepositoryTest {
         assertEquals("MyApp", project.name)
         assertEquals("com.diabo.myapp", project.packageName)
 
-        val files = repository.observeProjectFiles(project.id)
-        // Just confirm the folder was actually seeded on disk — Flow collection needs a
+        // Confirm the folder was actually seeded on disk — Flow collection needs a
         // running coroutine, so check the underlying folder directly for this smoke test.
         val projectDir = repository.projectFolder(project)
         assertTrue(java.io.File(projectDir, "src/MainActivity.java").exists())
