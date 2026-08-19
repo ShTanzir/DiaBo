@@ -11,15 +11,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.tanzir.diabo.data.local.entity.FileType
 import io.github.rosemoe.sora.langs.java.JavaLanguage
-import io.github.rosemoe.sora.langs.textmate.TextMateColorScheme
-import io.github.rosemoe.sora.langs.textmate.TextMateLanguage
 import io.github.rosemoe.sora.langs.textmate.registry.FileProviderRegistry
-import io.github.rosemoe.sora.langs.textmate.registry.GrammarRegistry
-import io.github.rosemoe.sora.langs.textmate.registry.ThemeRegistry
-import io.github.rosemoe.sora.langs.textmate.registry.model.ThemeModel
 import io.github.rosemoe.sora.langs.textmate.registry.provider.AssetsFileResolver
 import io.github.rosemoe.sora.widget.CodeEditor
-import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
 import io.github.rosemoe.sora.widget.schemes.SchemeDarcula
 import io.github.rosemoe.sora.widget.schemes.SchemeGitHub
 
@@ -53,7 +47,7 @@ fun SoraCodeEditor(
                 setText(initialContent)
                 applyDiaBoEditorDefaults(isDark)
                 setLanguageFor(fileType, ctx)
-                subscribeEvent<io.github.rosemoe.sora.event.ContentChangeEvent> { _, _ ->
+                subscribeEvent(io.github.rosemoe.sora.event.ContentChangeEvent::class.java) { _, _ ->
                     latestOnChange.value(text.toString())
                 }
             }
@@ -91,25 +85,20 @@ private fun CodeEditor.setLanguageFor(fileType: FileType, context: Context) {
 private var textMateRegistered = false
 
 /**
- * Registers the XML TextMate grammar once per process, then applies it.
- * Falls back to no-highlighting (EmptyLanguage) if the grammar assets aren't
- * present yet, so a missing asset never crashes the editor.
+ * XML syntax highlighting via sora-editor's TextMate support needs grammar assets
+ * (see the class doc comment above) AND the exact ThemeRegistry API for the installed
+ * sora-editor version verified against real docs — attempting that without either
+ * caused a compile error here previously, so this intentionally stays EmptyLanguage
+ * (plain monospace, no highlighting) until both are set up. Java files are unaffected
+ * and get full highlighting via JavaLanguage() above. Tracked in PHASE5_HARDENING.md.
  */
 private fun CodeEditor.setXmlLanguage(context: Context) {
     runCatching {
         if (!textMateRegistered) {
-            FileProviderRegistry.getInstance().addFileProvider(
-                AssetsFileResolver(context.assets)
-            )
-            GrammarRegistry.getInstance().loadGrammars("textmate/languages.json")
-            ThemeRegistry.getInstance().loadTheme(
-                ThemeModel(
-                    io.github.rosemoe.sora.langs.textmate.registry.model.ThemeSource("textmate/xml.json", "xml")
-                )
-            )
+            FileProviderRegistry.getInstance().addFileProvider(AssetsFileResolver(context.assets))
             textMateRegistered = true
         }
-        setEditorLanguage(TextMateLanguage.create("source.xml", true))
+        setEditorLanguage(io.github.rosemoe.sora.lang.EmptyLanguage())
     }.onFailure {
         setEditorLanguage(io.github.rosemoe.sora.lang.EmptyLanguage())
     }

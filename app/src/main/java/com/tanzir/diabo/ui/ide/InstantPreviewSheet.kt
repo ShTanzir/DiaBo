@@ -28,6 +28,7 @@ private const val DEBOUNCE_MS = 400L
  * are simulated for a safe supported subset (Toast, setText, setVisibility); anything
  * else is surfaced as "not simulated" rather than silently ignored.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InstantPreviewSheet(
     xmlContent: String?,

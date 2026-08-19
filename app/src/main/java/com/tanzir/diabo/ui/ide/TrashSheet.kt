@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.tanzir.diabo.data.local.entity.ProjectFile
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrashSheet(
     trashedFiles: List<ProjectFile>,

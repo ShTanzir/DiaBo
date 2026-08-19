@@ -22,6 +22,7 @@ import java.io.File
  * ▶ Real Build — shows live cloud-build progress (Queued → Building → Capturing → Done),
  * the emulator screenshot once ready, and Download/Install actions for the resulting APK.
  */
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RealBuildSheet(
     state: CodeIdeViewModel.RealBuildUiState,
