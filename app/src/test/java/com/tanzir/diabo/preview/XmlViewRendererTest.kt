@@ -18,6 +18,11 @@ class XmlViewRendererTest {
 
     private lateinit var renderer: XmlViewRenderer
 
+    // android.util.Xml.newPullParser() always parses namespace-aware (cannot be
+    // turned off), so every "android:"-prefixed attribute needs this declared
+    // somewhere on an ancestor — exactly like every real Android layout XML does.
+    private val xmlns = """xmlns:android="http://schemas.android.com/apk/res/android""""
+
     @Before
     fun setUp() {
         renderer = XmlViewRenderer(ApplicationProvider.getApplicationContext())
@@ -26,7 +31,7 @@ class XmlViewRendererTest {
     @Test
     fun `renders a LinearLayout with a TextView child as real Android views`() {
         val xml = """
-            <LinearLayout android:orientation="vertical">
+            <LinearLayout $xmlns android:orientation="vertical">
                 <TextView android:text="Hello, DiaBo!" />
             </LinearLayout>
         """.trimIndent()
@@ -45,7 +50,7 @@ class XmlViewRendererTest {
 
     @Test
     fun `unsupported tag returns a friendly Error instead of throwing`() {
-        val xml = """<SomeRandomCustomView android:text="x" />"""
+        val xml = """<SomeRandomCustomView $xmlns android:text="x" />"""
         val node = (XmlLayoutParser.parse(xml) as XmlParseResult.Success).root
         val result = renderer.render(node)
         assertTrue(result is ViewRenderResult.Error)
@@ -65,7 +70,7 @@ class XmlViewRendererTest {
         val clickRenderer = XmlViewRenderer(ApplicationProvider.getApplicationContext()) { method ->
             clickedMethod = method
         }
-        val xml = """<Button android:text="Go" android:onClick="onGoClick" />"""
+        val xml = """<Button $xmlns android:text="Go" android:onClick="onGoClick" />"""
         val node = (XmlLayoutParser.parse(xml) as XmlParseResult.Success).root
         val result = clickRenderer.render(node) as ViewRenderResult.Success
 
@@ -75,7 +80,7 @@ class XmlViewRendererTest {
 
     @Test
     fun `id attribute is simplified from an @+id-style reference`() {
-        val xml = """<TextView android:id="@+id/myLabel" />"""
+        val xml = """<TextView $xmlns android:id="@+id/myLabel" />"""
         val node = (XmlLayoutParser.parse(xml) as XmlParseResult.Success).root
         val result = renderer.render(node) as ViewRenderResult.Success
         val meta = result.view.tag as XmlViewRenderer.ViewMeta

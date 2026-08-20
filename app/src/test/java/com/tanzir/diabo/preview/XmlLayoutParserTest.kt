@@ -54,7 +54,9 @@ class XmlLayoutParserTest {
 
     @Test
     fun `strips namespace prefixes from attribute names`() {
-        val xml = """<TextView android:text="Hi" app:customAttr="x" />"""
+        val xml = """<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:text="Hi" app:customAttr="x" />"""
         val result = XmlLayoutParser.parse(xml)
         assertTrue(result is XmlParseResult.Success)
         val root = (result as XmlParseResult.Success).root
@@ -65,7 +67,7 @@ class XmlLayoutParserTest {
     @Test
     fun `parses deeply nested children correctly`() {
         val xml = """
-            <FrameLayout>
+            <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android">
                 <LinearLayout>
                     <Button android:text="A" />
                     <Button android:text="B" />

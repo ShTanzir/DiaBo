@@ -17,11 +17,13 @@ object XmlLayoutParser {
 
         return try {
             val parser: XmlPullParser = Xml.newPullParser()
-            // Namespace processing deliberately OFF: with it on, XmlPullParser throws
-            // "unbound prefix" for any android:/app:-prefixed attribute on an element
-            // where that namespace wasn't freshly re-declared — which breaks on
-            // perfectly normal nested layouts. We strip prefixes ourselves below via
-            // substringAfterLast(':'), so real namespace resolution was never needed.
+            // NOTE: android.util.Xml.newPullParser() always returns a namespace-aware
+            // parser — this can't actually be turned off via setFeature (Android forces
+            // it). That means every "android:"/"app:"-prefixed attribute in the XML MUST
+            // have its namespace declared via xmlns:android="..." somewhere on an
+            // ancestor element (normal Android layout XML always does this on the root).
+            // We still strip the prefix ourselves below via substringAfterLast(':') for
+            // simplicity, rather than relying on the parser's own namespace/local-name split.
             parser.setInput(StringReader(xml))
 
             var event = parser.eventType
