@@ -45,9 +45,10 @@ Polish, and Hardening.
   that was missing one; touch targets verified ≥48dp on interactive rows.
 
 ## Phase 3 — Cloud Build
-- `android-template/` (sibling folder in this ZIP) — separate minimal Android
-  project + `.github/workflows/diabo-preview-build.yml` that "▶ Real Build"
-  triggers via `workflow_dispatch`. Push it to its own repo once — see its README.
+- `android-template/` (sibling folder in this ZIP, and its own repo:
+  [github.com/ShTanzir/android-template](https://github.com/ShTanzir/android-template))
+  — separate minimal Android project + `.github/workflows/diabo-preview-build.yml`
+  that "▶ Real Build" triggers via `workflow_dispatch`.
 - `data/remote/GitHubApiService.kt` + `NetworkModule.kt` — Retrofit client for
   GitHub's REST API.
 - `data/remote/GitHubConfigStore.kt` — PAT stored via EncryptedSharedPreferences
@@ -60,9 +61,11 @@ Polish, and Hardening.
   `Migration(1, 2)`.
 
 ### One-time setup to use Real Build
-1. Push `android-template/`'s contents to their own GitHub repo.
+1. The `android-template/` folder already lives in its own repo:
+   **[github.com/ShTanzir/android-template](https://github.com/ShTanzir/android-template)**
+   — no push needed unless you're customizing it.
 2. Generate a fine-grained PAT (`Actions: read/write`, `Contents: read`) scoped to it.
-3. DiaBo → Settings → GitHub Integration → enter token + owner/repo.
+3. DiaBo → Settings → GitHub Integration → enter token + owner (`ShTanzir`) / repo (`android-template`).
 4. Open a project's `.java` and `.xml` tabs, tap ▶ Real Build.
 
 ## Phase 2 — Instant Preview
